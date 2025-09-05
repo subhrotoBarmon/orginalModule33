@@ -1,0 +1,13 @@
+*{
+     font-family: "Poppins", sans-serif;
+}
+.font-bangla{
+    font-family: "Hind Siliguri", sans-serif;
+}
+.btn-nav{
+    border: 2px solid #422AD5;
+    border-radius: 5px;
+    color: #422AD5;
+    font-weight: 600;
+    font-size: 18px;
+}
