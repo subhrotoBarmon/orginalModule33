@@ -11,6 +11,14 @@
     font-weight: 600;
     font-size: 18px;
 }
+.synonym-style{
+    border: 1px solid #e7e6f0;
+    border-radius: 5px;
+    color: #050318;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 8px;
+}
 .active{
     background-color: #422AD5;
     color: white;

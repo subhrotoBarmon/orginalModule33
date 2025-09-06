@@ -1,3 +1,29 @@
+// synonym
+let all=arr=>{
+    let err= arr.map(each =>`<li class="synonym-style">${each}</li>`);
+    // err.classList.add("btn-nav");
+     return err.join(" ");  
+}
+// loading
+let loading=(lesson)=>{
+      if(lesson===true){
+        document.getElementById("hide").classList.remove("hidden");
+        document.getElementById("word-container").classList.add("hidden");
+      }
+      else{
+        document.getElementById("word-container").classList.remove("hidden");
+        document.getElementById("hide").classList.add("hidden");
+      }
+}
+
+// pronunciation suction / শব্দের উচ্চারণ 
+
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
+}
+
 // 1st step
 
 let lessonData=()=>{
@@ -5,7 +31,8 @@ let lessonData=()=>{
     .then(res=>res.json())
     .then(data=>displayLesson(data.data)
 )};
-// create lesson-btn class remove function 
+
+// create lesson-btn class remove function  
 let removeClass=()=>{
     let all=document.querySelectorAll(".lesson-btn");
     all.forEach(activeBtn=>activeBtn.classList.remove("active"))
@@ -15,6 +42,7 @@ let removeClass=()=>{
 // 3rd step
 
 let loadEachLessonWord =id=>{
+  loading(true);
     let url=`https://openapi.programming-hero.com/api/level/${id}`;
     fetch(url)
     .then(res=>res.json())
@@ -62,15 +90,12 @@ let loadEachLessonWord =id=>{
           <p class="text-gray-600">${details.sentence}</p>
           <h4 class="text-[25px] font-semibold font-bangla">সমার্থক শব্দ গুলো</h4>
           <div class="flex-none">
-    <ul class="menu menu-horizontal px-1 gap-3">
-      <li><a class="btn-nav">${details.synonyms[0]}</a></li>
-      <li><a class="btn-nav">${details.synonyms[1]}</a></li>
-      <li><a class="btn-nav">${details.synonyms[2]}</a></li>
-    </ul>
+    <ul class="menu menu-horizontal px-1 gap-3 ">
+    ${all(details.synonyms)} </ul>
   </div>
         <button class="text-white bg-[#422ad5] rounded-xl w-[200px] p-4">Complete Learning</button>
         </div>
-        `
+        `;
 
         document.getElementById("my_modal_5").showModal();  /**বুঝি নাই  */
         
@@ -96,7 +121,8 @@ let displayWord=words=>{
           <p class="text-[20px] text-gray-600 font-bangla">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।</p>
           <h3 class="text-[40px] font-semibold font-bangla">নেক্সট Lesson এ যান ।</h3>
         </div>
-        `
+        `;
+        loading(false);
         return;
     }
 
@@ -110,15 +136,16 @@ let displayWord=words=>{
                 <p class="font-bangla text-[30px] text-[#313135]">"${word.meaning? word.meaning:"Meaning পাওয়া যায় নি"}/${word.pronunciation? word.pronunciation:"Pronouciation পাওয়া যায় নি"}"</p>
                 <div class="flex justify-between items-center mt-10">
                   <button id="details" onclick="showDetails(${word.id})" class="border-1 border-gray-400 bg-gray-200 p-1"><i class="fa-solid fa-circle-info"></i></button>
-                  <button class="border-1 border-gray-400 bg-gray-200 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                  <button onclick="pronounceWord('${word.word}')" class="border-1 border-gray-400 bg-gray-200 p-1"><i class="fa-solid fa-volume-high"></i></button>
                 </div>
                 </div>
         </div>
+       
+        `;
         
-        `
         wordContainer.appendChild(div);
     }
-
+   loading(false);
 }    
 
 // 2nd step
@@ -137,3 +164,24 @@ let displayLesson=lessons=>{
         });
 }
 lessonData();
+
+
+// search
+
+document.getElementById("btn-search").addEventListener("click",()=>{
+  removeClass();
+   let input=document.getElementById ("input-search");
+   let searchValue=input.value.trim().toLowerCase();
+  //  input.value="";
+  //  console.log(searchValue);
+   
+  fetch("https://openapi.programming-hero.com/api/words/all")
+  .then(res=>res.json())
+  .then(data=>{
+      let allWords=data.data;
+      let allWordsFilter=allWords.filter(word=>word.word.toLowerCase().includes(searchValue))
+      displayWord(allWordsFilter);
+    
+  });
+
+});

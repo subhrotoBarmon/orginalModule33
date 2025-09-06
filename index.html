@@ -57,6 +57,22 @@
        </div>
    </section>
 
+   <section id="hide" class="flex justify-center items-center mt-10 hidden">
+    <span class="loading loading-spinner loading-xl"></span>
+   </section>
+    
+   <!-- search section -->
+   <section class="flex justify-center items-center p-10">
+    <div class="join">
+  <div>
+    <label class="input validator join-item">
+      <input id="input-search" type="text" placeholder="Search your Vocabulary" required />
+    </label>
+  </div>
+  <button id="btn-search" class="btn btn-primary join-item">search</button>
+</div>
+   </section>
+
    <section id="word-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-3 bg-gray-100 my-10 p-5">
         <!-- <div class="h-[280px] w-[380px] bg-white flex justify-center text-center">
                 <div class="mt-8">
@@ -88,7 +104,7 @@
 <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
   <div class="modal-box">
     <div id="detailsBox"> 
-        <!-- <div>
+        <!-- <div> 
           <h2 class="text-[30px] font-semibold">Eager (<i class="fa-solid fa-microphone-lines"></i>:ইগার)</h2>
           <h4 class="text-[20px] font-semibold">Meaning</h4>
           <p class="text-gray-600">আগ্রহী</p>
